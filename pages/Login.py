@@ -89,327 +89,180 @@ def show_login_page():
     if "auth_mode" not in st.session_state:
         st.session_state.auth_mode = "Login"
 
-    st.markdown("""
-    <style>
-
-    .block-container{
-        padding-top:2rem;
-    }
-
-    .glass-card{
-
-    background: rgba(255,255,255,0.12);
-
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-
-    border: 1px solid rgba(255,255,255,0.25);
-
-    border-radius: 30px;
-
-    padding: 25px 30px;
-
-    max-width: 650px;
-
-    margin: auto;
-
-    box-shadow:
-    0 8px 32px rgba(31,38,135,0.18);
-    }
-
-    .main-title{
-        font-size:50px;
-        font-weight:800;
-        color:#1f2a44;
-        text-align:center;
-    }
-
-    .sub-title{
-
-    text-align:center;
-
-    color:#555;
-
-    font-size:26px;
-
-    font-weight:500;
-
-    margin-bottom:30px;
-
-    }
-    div[data-testid="stTextInput"] [data-testid="stWidgetLabel"] p,
-    div[data-testid="stCheckbox"] [data-testid="stWidgetLabel"] p {
-        font-size:26px !important;
-        font-weight:400 !important;
-        color:#1f2a44 !important;
-    }
-
-    div[data-testid="stTextInput"] input {
-
-    width:100% !important;
-
-    font-size:22px !important;
-
-    height:65px !important;
-
-    border-radius:15px !important;
-
-    }
-    div[data-testid="stTextInput"]{
-    width:100% !important;
-    }
-
-    div[data-testid="stCheckbox"] label {
-
-    display:flex !important;
-
-    align-items:center !important;
-
-    gap:10px !important;
-
-    }
-    div[data-testid="stCheckbox"] label p {
-
-    margin:0 !important;
-
-    font-size:18px !important;
-
-    font-weight:500 !important;
-
-    }
-
-
-    div.stButton > button{
-        border-radius:18px !important;
-
-        background:
-        linear-gradient(
-        90deg,
-        #5A4FF3,
-        #8266FF
-        ) !important;
-
-        color:white !important;
-
-        font-size:20px !important;
-
-        font-weight:700 !important;
-
-        border:none !important;
-
-        height:52px !important;
-    }
-
-    div.stButton > button p {
-        font-size:20px !important;
-    }
-
-    div.stButton > button:hover{
-        transform:translateY(-2px);
-    }
-
-    </style>
-    """, unsafe_allow_html=True)
-
-    left, right = st.columns([1.15, 1])
-
-    # =================================================
-    # LEFT SIDE HERO
-    # =================================================
-
-    with left:
-
-        st.image(
-            "assets/hero.png",
-            use_container_width=True
-        )
-
-        st.markdown(
+    st.markdown(
         """
-        <h1 style="
-        color:#1F2A44;
-        font-size:52px;
-        font-weight:800;
-        ">
-        Welcome to SociBuddy 🤖
-        </h1>
+        <style>
+        .block-container, div[data-testid="stMainBlockContainer"] {
+            width: 100%; max-width: 1180px; box-sizing: border-box;
+            padding: clamp(1rem, 3vw, 2.5rem);
+        }
+        section[data-testid="stSidebar"] { display: none; }
+        .st-key-login_layout > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+            align-items: center;
+            gap: clamp(1rem, 3vw, 3rem);
+        }
+        .st-key-login_layout > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] {
+            width: 100% !important; min-width: 0 !important; flex: none !important;
+            box-sizing: border-box;
+        }
+        .st-key-login_form_card {
+            box-sizing: border-box;
+            width: 100%;
+            padding: clamp(1rem, 3vw, 2rem);
+            background: rgba(255,255,255,.55);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,.8);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(31,38,135,.14);
+        }
+        .login-title {
+            color: #1f2a44; font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800; text-align: center; line-height: 1.1;
+        }
+        .login-subtitle {
+            color: #555; font-size: clamp(1rem, 2vw, 1.4rem);
+            font-weight: 500; text-align: center; margin-bottom: 1.5rem;
+        }
+        .login-hero-title {
+            color: #1f2a44; font-size: clamp(2rem, 4vw, 3.25rem);
+            font-weight: 800; line-height: 1.1;
+        }
+        .login-hero-copy {
+            color: #555; font-size: clamp(1rem, 2vw, 1.5rem);
+            line-height: 1.5;
+        }
+        div[data-testid="stTextInput"] [data-testid="stWidgetLabel"] p,
+        div[data-testid="stCheckbox"] [data-testid="stWidgetLabel"] p {
+            font-size: clamp(1rem, 2vw, 1.3rem) !important;
+            font-weight: 500 !important;
+            color: #1f2a44 !important;
+        }
+        div[data-testid="stTextInput"] input {
+            box-sizing: border-box;
+            width: 100% !important;
+            min-height: 3rem;
+            font-size: clamp(1rem, 1.8vw, 1.25rem) !important;
+            border-radius: 12px !important;
+        }
+        div[data-testid="stTextInput"] { width: 100% !important; }
+        div[data-testid="stCheckbox"] label {
+            display: flex !important; align-items: center !important; gap: 10px;
+        }
+        div[data-testid="stCheckbox"] label p {
+            margin: 0 !important; font-size: 1rem !important; font-weight: 500 !important;
+        }
+        div.stButton > button {
+            width: 100%;
+            height: 3.25rem !important;
+            min-height: 3.25rem;
+            padding: .5rem 1rem;
+            border-radius: 16px !important;
+            background: linear-gradient(90deg, #5A4FF3, #8266FF) !important;
+            color: white !important;
+            font-size: clamp(1rem, 1.8vw, 1.2rem) !important;
+            font-weight: 700 !important;
+            border: none !important;
+        }
+        div.stButton > button p { font-size: inherit !important; }
+        div.stButton > button:hover { transform: translateY(-2px); }
+        @media (max-width: 900px) {
+            .st-key-login_layout > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .st-key-login_layout [data-testid="stImage"] {
+                max-width: 420px; margin-inline: auto;
+            }
+        }
+        @media (max-width: 520px) {
+            .st-key-login_layout [data-testid="stImage"] { max-width: 220px; }
+            .login-hero-title { text-align: center; }
+            .login-hero-copy { text-align: center; }
+            .login-subtitle { margin-bottom: 1rem; }
+            .st-key-login_form_card { border-radius: 18px; }
+        }
+        </style>
         """,
-        unsafe_allow_html=True
-        )
+        unsafe_allow_html=True,
+    )
 
-        st.markdown(
-        """
-        <p style="
-        font-size:24px;
-        color:#555;">
-        Helping children build
-        confidence through AI-powered
-        social interaction training.
-        </p>
-        """,
-        unsafe_allow_html=True
-        )
+    with st.container(key="login_layout"):
+        left, right = st.columns([1.05, 1], gap="large")
 
-    # =================================================
-    # RIGHT SIDE LOGIN CARD
-    # =================================================
-
-    with right:
-
-        st.markdown("""
-        <div class='glass-card'>
-        """,
-        unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class='main-title'>
-        Welcome Back
-        </div>
-        """,
-        unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class='sub-title'>
-        Sign in to continue
-        </div>
-        """,
-        unsafe_allow_html=True)
-
-        col1,col2 = st.columns(2)
-
-        with col1:
-            if st.button(
-                "Login",
-                use_container_width=True
-            ):
-                st.session_state.auth_mode="Login"
-
-        with col2:
-            if st.button(
-                "Sign Up",
-                use_container_width=True
-            ):
-                st.session_state.auth_mode="Signup"
-
-        st.write("")
-
-        # =============================================
-        # LOGIN
-        # =============================================
-
-        if st.session_state.auth_mode=="Login":
-
-            email = st.text_input(
-                "Email",
+        with left:
+            st.image("assets/hero.png", width="stretch")
+            st.markdown(
+                '<div class="login-hero-title">Welcome to SociBuddy 🤖</div>',
+                unsafe_allow_html=True,
+            )
+            st.markdown(
+                '<div class="login-hero-copy">Helping children build confidence '
+                "through AI-powered social interaction training.</div>",
+                unsafe_allow_html=True,
             )
 
-            password = st.text_input(
-                "Password",
-                type="password"
-            )
-
-            remember = st.checkbox(
-                "Remember Me"
-            )
-
-            if st.button(
-                "Login Account",
-                use_container_width=True
-            ):
-
-                response = requests.post(
-                    "http://127.0.0.1:8000/login",
-                    json={
-                        "email": email,
-                        "password": password
-                    }
+        with right:
+            with st.container(key="login_form_card"):
+                st.markdown('<div class="login-title">Welcome Back</div>', unsafe_allow_html=True)
+                st.markdown(
+                    '<div class="login-subtitle">Sign in to continue</div>',
+                    unsafe_allow_html=True,
                 )
 
-                if response.status_code == 200:
-
-                    st.success(
-                        "✅ Login Successful"
-                    )
-
-                    st.session_state.logged_in = True
-
-                    st.session_state.user = email
-
-                    st.session_state.page = "Dashboard"
-
-                    st.rerun()
-
-                else:
-
-                    st.error(
-                        response.json()["detail"]
-                    )
-
-        # =============================================
-        # SIGNUP
-        # =============================================
-
-        else:
-
-            email = st.text_input(
-                "Email",
-                key="signup_email"
-            )
-
-            password = st.text_input(
-                "Password",
-                type="password",
-                key="signup_pass"
-            )
-
-            confirm = st.text_input(
-                "Confirm Password",
-                type="password",
-                key="signup_confirm"
-            )
-
-            if st.button(
-                "Create Account",
-                use_container_width=True
-            ):
-
-                if password != confirm:
-
-                    st.error(
-                        "❌ Passwords do not match"
-                    )
-
-                elif len(password) < 6:
-
-                    st.error(
-                        "❌ Password must contain at least 6 characters"
-                    )
-
-                else:
-
-                    response = requests.post(
-                        "http://127.0.0.1:8000/signup",
-                        json={
-                            "email": email,
-                            "password": password
-                        }
-                    )
-
-                    if response.status_code == 200:
-
-                        st.success(
-                            "✅ Account Created Successfully"
-                        )
-
+                col1, col2 = st.columns(2)
+                with col1:
+                    if st.button("Login", width="stretch", key="login_mode_button"):
                         st.session_state.auth_mode = "Login"
 
-                    else:
+                with col2:
+                    if st.button("Sign Up", width="stretch", key="signup_mode_button"):
+                        st.session_state.auth_mode = "Signup"
 
-                        st.error(
-                            response.json()["detail"]
+                st.write("")
+
+                if st.session_state.auth_mode == "Login":
+                    email = st.text_input("Email")
+                    password = st.text_input("Password", type="password")
+                    st.checkbox("Remember Me")
+
+                    if st.button("Login Account", width="stretch"):
+                        response = requests.post(
+                            "http://127.0.0.1:8000/login",
+                            json={"email": email, "password": password},
                         )
 
-        st.markdown(
-            "</div>",
-            unsafe_allow_html=True
-        )
+                        if response.status_code == 200:
+                            st.success("✅ Login Successful")
+                            st.session_state.logged_in = True
+                            st.session_state.user = email
+                            st.session_state.page = "Dashboard"
+                            st.rerun()
+                        else:
+                            st.error(response.json()["detail"])
+                else:
+                    email = st.text_input("Email", key="signup_email")
+                    password = st.text_input("Password", type="password", key="signup_pass")
+                    confirm = st.text_input(
+                        "Confirm Password",
+                        type="password",
+                        key="signup_confirm",
+                    )
+
+                    if st.button("Create Account", width="stretch"):
+                        if password != confirm:
+                            st.error("❌ Passwords do not match")
+                        elif len(password) < 6:
+                            st.error("❌ Password must contain at least 6 characters")
+                        else:
+                            response = requests.post(
+                                "http://127.0.0.1:8000/signup",
+                                json={"email": email, "password": password},
+                            )
+
+                            if response.status_code == 200:
+                                st.success("✅ Account Created Successfully")
+                                st.session_state.auth_mode = "Login"
+                            else:
+                                st.error(response.json()["detail"])
